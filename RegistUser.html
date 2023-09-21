@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/axios.js"></script>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/element-ui.js"></script>
+    <link rel="stylesheet" href="./lib/element-ui.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+    <div id="registPage">
+        <div class="regist-pad">
+            <h2>用户注册</h2>
+            <el-input v-model="userName" placeholder="请输入用户名"></el-input>
+            <el-input v-model="userNo" placeholder="请输入用户账号"></el-input>
+            <el-input v-model="password" placeholder="请输入登录密码"></el-input>
+            <el-input v-model="password_repeat" placeholder="请确认输入密码"></el-input>
+            <el-button type="primary" @click="regist">注册用户</el-button>
+        </div>
+    </div>
+</body>
+
+<script>
+    let vm = new Vue({
+        el: "#registPage",
+        data: function() {
+            return {
+                userName: "",
+                userNo: "",
+                password: "",
+                password_repeat: ""
+            }
+        },
+        methods: {
+            regist() {
+                // 第三个参数可以传各种配置信息，第二个是参数体
+                axios.post("http://localhost:5281/Login", {
+                    userName: this.userName,
+                    userNo: this.userNo,
+                    password: this.password,
+                    // isDelete: "0"
+                }).then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.error('Error:', err.response);
+                })
+            }
+        }
+    })
+</script>
+
+<style>
+    .regist-pad {
+        width: 600px;
+        padding: 20px;
+        margin: auto;
+        margin-top: 10%;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-shadow:0 0 10px #ccc;
+    }
+    h2 {
+        text-align: center;
+    }
+    .el-input {
+        margin-bottom: 20px;
+    }
+    .el-button {
+        width: 100%;
+    }
+</style>
+</html>
